@@ -6,18 +6,20 @@ const REVEALED_STYLE = {
 }
 
 const UNREVEALED_STYLE = {
-    backgroundColor: 'gray',
-    borderStyle: 'ridge',
-    borderWidth: '2px',
-    borderColor: 'darkgray',
+  backgroundColor: 'gray',
+  borderStyle: 'ridge',
+  borderWidth: '2px',
+  borderColor: 'darkgray',
 }
 
-export function Cell({ revealed, neighboringMines }: CellState) {
+export function Cell({ revealed, neighboringMines, onClick }: CellState) {
   return (
-    <div style={{
-      ...!revealed ? UNREVEALED_STYLE : REVEALED_STYLE
+    <div onClick={onClick} style={{
+      ...!revealed ? UNREVEALED_STYLE : REVEALED_STYLE,
+      flex: 1,
+      flexBasis: '50px'
     }}>
-      {!revealed ? '&nbsp;' : neighboringMines}
+      {!revealed ? ' ' : neighboringMines}
     </div>
   )
 }
