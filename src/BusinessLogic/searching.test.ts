@@ -131,5 +131,17 @@ describe('reveal function', () => {
         [F, F, F, F, F, T, T, T, T],
       ])
     })
+    it('should retain state when mines explode', () => {
+      const intermediateState = reveal(originalState, 5, 6)
+      const newState = reveal(intermediateState, 0, 0)
+      expect(newState.revealed).toEqual([
+        [T, F, F, F, T, F, F, T, T],
+        [F, F, F, F, F, F, F, F, F],
+        [F, F, F, F, F, T, F, T, T],
+        [F, F, F, F, F, T, T, T, T],
+        [T, F, F, F, T, T, T, T, T],
+        [F, F, F, F, T, T, T, T, T],
+      ])
+    })
   })
 })
