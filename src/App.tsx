@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useState, useReducer } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Board } from './ComplicatedComponents/Board'
 
 function App() {
+  const [key, refresh] = useReducer(state => state + 1, 0)
+  const [won, setWon] = useState<boolean | null>(null)
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        {won === true && `YOU WON!`}
+        {won === false && `YOU LOST! :-(`}
+        MikeSweeper!
+        <Board key={key} rows={5} columns={5} mines={4} onWin={() => setWon(true)} onLose={() => setWon(false)} />
         <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={() => {
+            setWon(null)
+            refresh()
+          }}
         >
-          Learn React
+          Refresh Game
         </a>
       </header>
     </div>
