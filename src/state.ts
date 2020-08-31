@@ -2,6 +2,11 @@ export type Cell = {
   neighboringMines: number
 }
 
+export type CellState = Cell & {
+  revealed: boolean,
+  onClick: () => void
+}
+
 export enum GameStatus {
   WIN,
   LOSE,
@@ -13,4 +18,5 @@ export type BoardState = {
   cells: Cell[][],
   revealed: boolean[][],
   gameStatus: GameStatus,
+  flagged: boolean[][],
 }
