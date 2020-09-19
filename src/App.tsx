@@ -20,9 +20,10 @@ function App() {
   const [columns, setColumns] = useState<number>(30);
 
   // this effect will enforce the constraints of the game.
-  // we can't have more mines than rows * columns
+  // we can't have more mines than rows * columns - 1...
+  // you will have lost the game before you even played
   useEffect(() => {
-    setMines(clamp(1, mines, rows * columns))
+    setMines(clamp(1, mines, rows * columns - 1))
     setRows(clamp(5, rows, 80))
     setColumns(clamp(5, columns, 80))
   }, [mines, rows, columns])

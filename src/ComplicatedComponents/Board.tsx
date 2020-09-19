@@ -31,7 +31,7 @@ export function Board({
     let cells: number[] = Array.from(new Array(rows * columns), () =>
       Math.random()
     );
-    for (let i = 1; i < mines; i++) {
+    for (let i = 1; i <= mines; i++) {
       const min = Math.min(...cells);
       const index = cells.indexOf(min);
       mine_array.push([Math.floor(index / columns), index % columns]);
