@@ -138,5 +138,44 @@ describe("reveal function", () => {
         [F, F, F, F, T, T, T, T, T],
       ]);
     });
+    describe("flagged cells", () => {
+      const originalState = {
+        ...buildTestState([
+          //      0  1  2  3  4  5  6  7  8
+          //     ============================
+          /* 0 */ [M, 1, 0, 1, M, 1, 1, M, M],
+          /* 1 */ [1, 1, 0, 1, 2, 2, 3, 4, 4],
+          /* 2 */ [0, 0, 0, 0, 1, M, 2, M, M],
+          /* 3 */ [1, 1, 0, 1, 2, 2, 2, 3, M],
+          /* 4 */ [M, 1, 0, 2, M, 2, 0, 1, 1],
+          /* 5 */ [1, 1, 0, 2, M, 2, 0, 0, 0],
+        ]),
+        flagged: [
+          //      0  1  2  3  4  5  6  7  8
+          //     ============================
+          /* 0 */ [F, F, F, F, F, F, F, F, F],
+          /* 1 */ [F, F, F, F, F, F, F, F, F],
+          /* 2 */ [F, F, F, F, F, F, F, F, F],
+          /* 3 */ [F, F, F, F, F, F, F, F, F],
+          /* 4 */ [F, F, F, F, F, F, F, F, F],
+          /* 5 */ [F, F, F, F, F, F, T, F, F],
+        ],
+      };
+
+      it("should not allow revealing flagged cells", () => {
+        const newState = reveal(originalState, 5, 6);
+
+        expect(newState.revealed).toEqual([
+          //      0  1  2  3  4  5  6  7  8
+          //     ============================
+          /* 0 */ [F, F, F, F, F, F, F, F, F],
+          /* 1 */ [F, F, F, F, F, F, F, F, F],
+          /* 2 */ [F, F, F, F, F, F, F, F, F],
+          /* 3 */ [F, F, F, F, F, F, F, F, F],
+          /* 4 */ [F, F, F, F, F, F, F, F, F],
+          /* 5 */ [F, F, F, F, F, F, F, F, F],
+        ])
+      });
+    });
   });
 });
