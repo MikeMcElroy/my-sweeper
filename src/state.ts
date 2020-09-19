@@ -1,13 +1,13 @@
 export type Cell = {
-  neighboringMines: number
-}
+  neighboringMines: number;
+};
 
 export type CellState = Cell & {
-  revealed: boolean,
-  flagged: boolean,
-  onReveal: () => void,
-  onFlag: () => void,
-}
+  revealed: boolean;
+  flagged: boolean;
+  onReveal: () => void;
+  onFlag: () => void;
+};
 
 export enum GameStatus {
   WIN,
@@ -15,10 +15,10 @@ export enum GameStatus {
   PLAYING,
 }
 
-export type Board = Cell[][]
+export type Board = Cell[][];
 export type BoardState = {
-  cells: Cell[][],
-  revealed: boolean[][],
-  gameStatus: GameStatus,
-  flagged: boolean[][],
-}
+  cells: Cell[][];
+  revealed: boolean[][];
+  gameStatus: GameStatus;
+  flagged: boolean[][];
+};

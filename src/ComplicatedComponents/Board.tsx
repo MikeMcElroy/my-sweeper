@@ -4,7 +4,7 @@ import findNeighboringCells from "../BusinessLogic/findNeighboringCells";
 import { reveal } from "../BusinessLogic/searching";
 import { Cell as GameCell } from "../SimpleComponents/Cell";
 
-const noop = () => {}
+const noop = () => {};
 
 export function Board({
   rows,
@@ -13,18 +13,18 @@ export function Board({
   onWin,
   onLose,
 }: {
-  rows: number
-  columns: number
-  mines: number
-  onWin: () => void
-  onLose: () => void
+  rows: number;
+  columns: number;
+  mines: number;
+  onWin: () => void;
+  onLose: () => void;
 }): React.ReactElement {
   const [revealed, setRevealed] = useState<boolean[][] | null>(null);
   const [internalBoardState, setInternalBoardState] = useState<Cell[][] | null>(
     null
   );
   const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.PLAYING);
-  const [flagged, setFlagged] = useState<boolean[][] | null>(null)
+  const [flagged, setFlagged] = useState<boolean[][] | null>(null);
 
   useEffect(() => {
     let mine_array: [number, number][] = [];
@@ -58,57 +58,79 @@ export function Board({
 
     setInternalBoardState(board.cells);
     setRevealed(board.revealed);
-    setFlagged(board.flagged)
+    setFlagged(board.flagged);
   }, [rows, columns, mines]);
 
   useEffect(() => {
     if (!revealed || !internalBoardState) {
-      return
+      return;
     }
-    const revealedCells = revealed.flat()
-    if (internalBoardState.flat().every(({ neighboringMines }, index) => neighboringMines === -1 ? true : revealedCells[index])) {
-      setGameStatus(GameStatus.WIN)
+    const revealedCells = revealed.flat();
+    if (
+      internalBoardState
+        .flat()
+        .every(({ neighboringMines }, index) =>
+          neighboringMines === -1 ? true : revealedCells[index]
+        )
+    ) {
+      setGameStatus(GameStatus.WIN);
     }
-  }, [revealed, internalBoardState, setGameStatus])
+  }, [revealed, internalBoardState, setGameStatus]);
 
   useEffect(() => {
     if (gameStatus === GameStatus.LOSE) {
-      onLose()
+      onLose();
     } else if (gameStatus === GameStatus.WIN) {
-      onWin()
+
+      onWin();
     }
-  }, [gameStatus, onLose, onWin])
+  }, [gameStatus, onLose, onWin]);
 
   if (!revealed || !internalBoardState || !flagged) {
     return <div>Waiting for the game to start...</div>;
   }
 
-  const clickCell = gameStatus === GameStatus.PLAYING ? function (row: number, column: number) {
-    const newState = reveal(
-      {
-        cells: internalBoardState,
-        revealed,
-        gameStatus,
-        flagged,
-      },
-      row,
-      column
-    );
-    setInternalBoardState(newState.cells);
-    setRevealed(newState.revealed);
-    setGameStatus(newState.gameStatus);
-    setFlagged(newState.flagged);
-  } : noop
+  const clickCell =
+    gameStatus === GameStatus.PLAYING
+      ? function (row: number, column: number) {
+          const newState = reveal(
+            {
+              cells: internalBoardState,
+              revealed,
+              gameStatus,
+              flagged,
+            },
+            row,
+            column
+          );
+          setInternalBoardState(newState.cells);
+          setRevealed(newState.revealed);
+          setGameStatus(newState.gameStatus);
+          setFlagged(newState.flagged);
+        }
+      : noop;
 
-  const toggleFlagCell = gameStatus === GameStatus.PLAYING ? function (row: number, column: number): void {
-    const newFlags = flagged.map((r, ri) => ri !== row ? r : r.map((c, ci) => ci === column ? !c : c))
-    setFlagged(newFlags)
-  } : noop
+  const toggleFlagCell =
+    gameStatus === GameStatus.PLAYING
+      ? function (row: number, column: number): void {
+          const newFlags = flagged.map((r, ri) =>
+            ri !== row ? r : r.map((c, ci) => (ci === column ? !c : c))
+          );
+          setFlagged(newFlags);
+        }
+      : noop;
 
   return (
     <div>
-      {internalBoardState.map((row, rowIndex) =>
-        <div key={rowIndex} style={{display:'flex', width: `${columns*50}px`, height: '50px'}}>
+      {internalBoardState.map((row, rowIndex) => (
+        <div
+          key={rowIndex}
+          style={{
+            display: "flex",
+            width: `${columns * 50}px`,
+            height: "50px",
+          }}
+        >
           {row.map((column, columnIndex) => (
             <GameCell
               key={`${rowIndex}-${columnIndex}`}
@@ -120,7 +142,7 @@ export function Board({
             />
           ))}
         </div>
-      )}
+      ))}
     </div>
   );
 }
