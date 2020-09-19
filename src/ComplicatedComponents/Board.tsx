@@ -81,7 +81,6 @@ export function Board({
     if (gameStatus === GameStatus.LOSE) {
       onLose();
     } else if (gameStatus === GameStatus.WIN) {
-
       onWin();
     }
   }, [gameStatus, onLose, onWin]);
