@@ -1,5 +1,17 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Instructions for playing
+
+Once you clone this repository, install the dependencies and run the server with `yarn && yarn start`.  You'll immediately be brought to http://localhost:3000 and you can start playing.
+
+The game ends when there are no more unrevealed non-mine cells OR all mine cells have been flagged (and no non-mined cells have been flagged).
+
+Use a right click or the meta-key with the click to place a flag.
+
+Have fun sweeping!
+
+![A game of My-Sweeper in which I found 24 mines in a 5x5 grid](my-sweeper.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
