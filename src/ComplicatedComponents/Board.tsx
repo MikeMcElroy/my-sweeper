@@ -4,6 +4,8 @@ import findNeighboringCells from "../BusinessLogic/findNeighboringCells";
 import { reveal } from "../BusinessLogic/searching";
 import { Cell as GameCell } from "../SimpleComponents/Cell";
 
+const noop = () => {}
+
 export function Board({
   rows,
   columns,
@@ -81,7 +83,7 @@ export function Board({
     return <div>Waiting for the game to start...</div>;
   }
 
-  const clickCell = function (row: number, column: number) {
+  const clickCell = gameStatus === GameStatus.PLAYING ? function (row: number, column: number) {
     const newState = reveal(
       {
         cells: internalBoardState,
@@ -96,12 +98,12 @@ export function Board({
     setRevealed(newState.revealed);
     setGameStatus(newState.gameStatus);
     setFlagged(newState.flagged);
-  };
+  } : noop
 
-  const toggleFlagCell = function (row: number, column: number): void {
+  const toggleFlagCell = gameStatus === GameStatus.PLAYING ? function (row: number, column: number): void {
     const newFlags = flagged.map((r, ri) => ri !== row ? r : r.map((c, ci) => ci === column ? !c : c))
     setFlagged(newFlags)
-  }
+  } : noop
 
   return (
     <div>
