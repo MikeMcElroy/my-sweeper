@@ -24,7 +24,7 @@ export function reveal(
         const [rr, rc] = queueOfRevealingCells[0];
         queueOfRevealingCells.shift();
         // short-circuit if it's already been revealed!
-        if (draft.revealed[rr][rc] === false) {
+        if (draft.revealed[rr][rc] === false && draft.flagged[rr][rc] === false) {
           draft.revealed[rr][rc] = true;
           if (draft.cells[rr][rc].neighboringMines === 0) {
             queueOfRevealingCells.push(
