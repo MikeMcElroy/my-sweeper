@@ -4,6 +4,7 @@ import { BoardState, GameStatus } from '../state'
 const M = -1
 const F = false
 const T = true
+const X = 'FLAGGED'
 
 function reportBoardState(board:BoardState) {
   console.log(
@@ -18,6 +19,11 @@ function reportBoardState(board:BoardState) {
 
 function buildTestState(board: number[][]): BoardState {
   return {
+    flagged: board.map(
+      row => row.map(
+        _ => false
+      )
+    ),
     revealed: board.map(
       row => row.map(
         _ => false

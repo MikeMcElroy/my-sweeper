@@ -4,7 +4,9 @@ export type Cell = {
 
 export type CellState = Cell & {
   revealed: boolean,
-  onClick: () => void
+  flagged: boolean,
+  onReveal: () => void,
+  onFlag: () => void,
 }
 
 export enum GameStatus {

@@ -95,17 +95,26 @@ export function Board({
     setInternalBoardState(newState.cells);
     setRevealed(newState.revealed);
     setGameStatus(newState.gameStatus);
+    setFlagged(newState.flagged);
   };
+
+  const toggleFlagCell = function (row: number, column: number): void {
+    const newFlags = flagged.map((r, ri) => ri !== row ? r : r.map((c, ci) => ci === column ? !c : c))
+    setFlagged(newFlags)
+  }
+
   return (
     <div>
-      {internalBoardState.map((rows, rowIndex) =>
-        <div key={rowIndex} style={{display:'flex', width: '250px', height: '50px'}}>
-          {rows.map((column, columnIndex) => (
+      {internalBoardState.map((row, rowIndex) =>
+        <div key={rowIndex} style={{display:'flex', width: `${columns*50}px`, height: '50px'}}>
+          {row.map((column, columnIndex) => (
             <GameCell
               key={`${rowIndex}-${columnIndex}`}
               revealed={revealed[rowIndex][columnIndex]}
               neighboringMines={column.neighboringMines}
-              onClick={() => clickCell(rowIndex, columnIndex)}
+              onReveal={() => clickCell(rowIndex, columnIndex)}
+              onFlag={() => toggleFlagCell(rowIndex, columnIndex)}
+              flagged={flagged[rowIndex][columnIndex]}
             />
           ))}
         </div>

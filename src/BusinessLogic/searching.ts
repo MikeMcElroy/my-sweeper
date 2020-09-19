@@ -23,13 +23,16 @@ export function reveal(
       while (queueOfRevealingCells.length) {
         const [rr, rc] = queueOfRevealingCells[0];
         queueOfRevealingCells.shift();
-        draft.revealed[rr][rc] = true;
-        if (draft.cells[rr][rc].neighboringMines === 0) {
-          queueOfRevealingCells.push(
-            ...findNeighboringCells(draft.cells, rr, rc).filter(
-              ([cellRow, cellColumn]) => !draft.revealed[cellRow][cellColumn]
-            )
-          );
+        // short-circuit if it's already been revealed!
+        if (draft.revealed[rr][rc] === false) {
+          draft.revealed[rr][rc] = true;
+          if (draft.cells[rr][rc].neighboringMines === 0) {
+            queueOfRevealingCells.push(
+              ...findNeighboringCells(draft.cells, rr, rc).filter(
+                ([cellRow, cellColumn]) => !draft.revealed[cellRow][cellColumn]
+              )
+            );
+          }
         }
       }
     }

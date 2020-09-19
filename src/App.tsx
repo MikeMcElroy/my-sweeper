@@ -13,7 +13,7 @@ function App() {
         {won === true && `YOU WON!`}
         {won === false && `YOU LOST! :-(`}
         MikeSweeper!
-        <Board key={key} rows={5} columns={5} mines={4} onWin={() => setWon(true)} onLose={() => setWon(false)} />
+        <Board key={key} rows={20} columns={30} mines={40} onWin={() => setWon(true)} onLose={() => setWon(false)} />
         <a
           onClick={() => {
             setWon(null)
@@ -26,5 +26,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
