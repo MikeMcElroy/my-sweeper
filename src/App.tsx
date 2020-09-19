@@ -21,12 +21,12 @@ function App() {
 
   // this effect will enforce the constraints of the game.
   // we can't have more mines than rows * columns - 1...
-  // you will have lost the game before you even played
+  // it's not much of a game at that point, it's more like a chore.
   useEffect(() => {
-    setMines(clamp(1, mines, rows * columns - 1))
-    setRows(clamp(5, rows, 80))
-    setColumns(clamp(5, columns, 80))
-  }, [mines, rows, columns])
+    setMines(clamp(1, mines, rows * columns - 1));
+    setRows(clamp(5, rows, 80));
+    setColumns(clamp(5, columns, 80));
+  }, [mines, rows, columns]);
 
   const gameBoard = useMemo(
     () => (
@@ -55,8 +55,8 @@ function App() {
         <hr />
         My-Sweeper!
         {gameBoard}
-        </section>
-        <section className="App-mySweeper-config">
+      </section>
+      <section className="App-mySweeper-config">
         <button
           onClick={() => {
             setWon(null);
