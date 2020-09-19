@@ -174,7 +174,21 @@ describe("reveal function", () => {
           /* 3 */ [F, F, F, F, F, F, F, F, F],
           /* 4 */ [F, F, F, F, F, F, F, F, F],
           /* 5 */ [F, F, F, F, F, F, F, F, F],
-        ])
+        ]);
+      });
+      it("should not allow revealing adjacent flagged cells", () => {
+        const newState = reveal(originalState, 5, 7);
+
+        expect(newState.revealed).toEqual([
+          //      0  1  2  3  4  5  6  7  8
+          //     ============================
+          /* 0 */ [F, F, F, F, F, F, F, F, F],
+          /* 1 */ [F, F, F, F, F, F, F, F, F],
+          /* 2 */ [F, F, F, F, F, F, F, F, F],
+          /* 3 */ [F, F, F, F, F, T, T, T, F],
+          /* 4 */ [F, F, F, F, F, T, T, T, T],
+          /* 5 */ [F, F, F, F, F, T, F, T, T],
+        ]);
       });
     });
   });
