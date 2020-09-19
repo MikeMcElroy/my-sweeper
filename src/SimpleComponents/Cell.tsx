@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { CellState } from '../state'
 
 const REVEALED_STYLE = {
@@ -42,6 +42,7 @@ function cellContent(neighboringMines: number, flagged: boolean, revealed: boole
 }
 
 export function Cell({ revealed, flagged, neighboringMines, onReveal, onFlag }: CellState) {
+  const [clickedOnMine, setClickedOnMine] = useState(false)
   function handleContextMenu (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     ev.preventDefault()
     if (!revealed) {
@@ -52,7 +53,10 @@ export function Cell({ revealed, flagged, neighboringMines, onReveal, onFlag }: 
     ev.preventDefault()
     if (ev.metaKey) {
       onFlag()
-    } else {
+    } else if (!flagged) {
+      if (neighboringMines === -1) {
+        setClickedOnMine(true)
+      }
       onReveal()
     }
   }
@@ -65,12 +69,13 @@ export function Cell({ revealed, flagged, neighboringMines, onReveal, onFlag }: 
       borderStyle: 'outset',
       flexBasis: '50px',
       ...!revealed ? UNREVEALED_STYLE : REVEALED_STYLE,
+      ...neighboringMineStyles[neighboringMines],
+      ...clickedOnMine ? { backgroundColor: 'red', color: 'white' } : {},
     }}>
       <span style={{
         verticalAlign: 'top',
         fontSize: 'smaller',
         ...!flagged ? UNFLAGGED_STYLE : FLAGGED_STYLE,
-        ...neighboringMineStyles[neighboringMines]
       }}>{cellContent(neighboringMines, flagged, revealed)}</span>
     </div>
   )
