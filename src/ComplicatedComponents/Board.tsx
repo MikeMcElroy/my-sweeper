@@ -62,20 +62,28 @@ export function Board({
   }, [rows, columns, mines]);
 
   useEffect(() => {
-    if (!revealed || !internalBoardState) {
+    if (!revealed || !internalBoardState || !flagged) {
       return;
     }
     const revealedCells = revealed.flat();
+    const flaggedCells = flagged.flat();
+    const boardCells = internalBoardState.flat();
     if (
-      internalBoardState
-        .flat()
+      // every non-mine cell is revealed
+      boardCells
         .every(({ neighboringMines }, index) =>
           neighboringMines === -1 ? true : revealedCells[index]
+        )
+        ||
+      // every mine cell is flagged
+      boardCells
+        .every(({ neighboringMines }, index) =>
+          neighboringMines === -1 ? flaggedCells[index] : !flaggedCells[index]
         )
     ) {
       setGameStatus(GameStatus.WIN);
     }
-  }, [revealed, internalBoardState, setGameStatus]);
+  }, [revealed, flagged, internalBoardState, setGameStatus]);
 
   useEffect(() => {
     if (gameStatus === GameStatus.LOSE) {
